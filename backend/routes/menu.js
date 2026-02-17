@@ -1,16 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const Category = require('../models/Category');
-const MenuItem = require('../models/MenuItem');
-const Settings = require('../models/Settings');
+const supabase = require('../config/supabase');
+const supabaseAdmin = require('../config/supabaseAdmin'); // Import admin client
 const authMiddleware = require('../middleware/auth');
 
 // Get all categories (public)
 router.get('/categories', async (req, res) => {
     try {
-        const categories = await Category.find().sort({ displayOrder: 1 });
-        res.json(categories);
+        const { data, error } = await supabase
+            .from('categories')
+            .select('*')
+            .order('display_order', { ascending: true });
+
+        if (error) throw error;
+        res.json(data);
     } catch (error) {
+        console.error('Error fetching categories:', error);
         res.status(500).json({ error: 'Error fetching categories' });
     }
 });
@@ -19,10 +24,17 @@ router.get('/categories', async (req, res) => {
 router.post('/categories', authMiddleware, async (req, res) => {
     try {
         const { name, displayOrder } = req.body;
-        const category = new Category({ name, displayOrder });
-        await category.save();
-        res.status(201).json(category);
+
+        const { data, error } = await supabaseAdmin // Use admin client
+            .from('categories')
+            .insert([{ name, display_order: displayOrder }])
+            .select()
+            .single();
+
+        if (error) throw error;
+        res.status(201).json(data);
     } catch (error) {
+        console.error('Error creating category:', error);
         res.status(500).json({ error: 'Error creating category' });
     }
 });
@@ -30,11 +42,16 @@ router.post('/categories', authMiddleware, async (req, res) => {
 // Delete category (admin only)
 router.delete('/categories/:id', authMiddleware, async (req, res) => {
     try {
-        await Category.findByIdAndDelete(req.params.id);
-        // Also delete all menu items in this category
-        await MenuItem.deleteMany({ category: req.params.id });
+        // Cascade delete is handled by database foreign key constraint
+        const { error } = await supabaseAdmin // Use admin client
+            .from('categories')
+            .delete()
+            .eq('id', req.params.id);
+
+        if (error) throw error;
         res.json({ message: 'Category deleted successfully' });
     } catch (error) {
+        console.error('Error deleting category:', error);
         res.status(500).json({ error: 'Error deleting category' });
     }
 });
@@ -42,9 +59,17 @@ router.delete('/categories/:id', authMiddleware, async (req, res) => {
 // Get all menu items (public)
 router.get('/items', async (req, res) => {
     try {
-        const items = await MenuItem.find().populate('category');
-        res.json(items);
+        const { data, error } = await supabase
+            .from('menu_items')
+            .select(`
+                *,
+                category:categories(*)
+            `);
+
+        if (error) throw error;
+        res.json(data);
     } catch (error) {
+        console.error('Error fetching menu items:', error);
         res.status(500).json({ error: 'Error fetching menu items' });
     }
 });
@@ -52,9 +77,18 @@ router.get('/items', async (req, res) => {
 // Get menu items by category (public)
 router.get('/items/category/:categoryId', async (req, res) => {
     try {
-        const items = await MenuItem.find({ category: req.params.categoryId }).populate('category');
-        res.json(items);
+        const { data, error } = await supabase
+            .from('menu_items')
+            .select(`
+                *,
+                category:categories(*)
+            `)
+            .eq('category_id', req.params.categoryId);
+
+        if (error) throw error;
+        res.json(data);
     } catch (error) {
+        console.error('Error fetching menu items:', error);
         res.status(500).json({ error: 'Error fetching menu items' });
     }
 });
@@ -63,11 +97,27 @@ router.get('/items/category/:categoryId', async (req, res) => {
 router.post('/items', authMiddleware, async (req, res) => {
     try {
         const { name, category, price, description, isSpecial, image } = req.body;
-        const menuItem = new MenuItem({ name, category, price, description, isSpecial, image });
-        await menuItem.save();
-        const populatedItem = await MenuItem.findById(menuItem._id).populate('category');
-        res.status(201).json(populatedItem);
+
+        const { data, error } = await supabaseAdmin // Use admin client
+            .from('menu_items')
+            .insert([{
+                name,
+                category_id: category,
+                price,
+                description,
+                is_special: isSpecial,
+                image
+            }])
+            .select(`
+                *,
+                category:categories(*)
+            `)
+            .single();
+
+        if (error) throw error;
+        res.status(201).json(data);
     } catch (error) {
+        console.error('Error creating menu item:', error);
         res.status(500).json({ error: 'Error creating menu item' });
     }
 });
@@ -76,13 +126,28 @@ router.post('/items', authMiddleware, async (req, res) => {
 router.put('/items/:id', authMiddleware, async (req, res) => {
     try {
         const { name, category, price, description, isSpecial, image } = req.body;
-        const menuItem = await MenuItem.findByIdAndUpdate(
-            req.params.id,
-            { name, category, price, description, isSpecial, image },
-            { new: true }
-        ).populate('category');
-        res.json(menuItem);
+
+        const { data, error } = await supabaseAdmin // Use admin client
+            .from('menu_items')
+            .update({
+                name,
+                category_id: category,
+                price,
+                description,
+                is_special: isSpecial,
+                image
+            })
+            .eq('id', req.params.id)
+            .select(`
+                *,
+                category:categories(*)
+            `)
+            .single();
+
+        if (error) throw error;
+        res.json(data);
     } catch (error) {
+        console.error('Error updating menu item:', error);
         res.status(500).json({ error: 'Error updating menu item' });
     }
 });
@@ -90,9 +155,15 @@ router.put('/items/:id', authMiddleware, async (req, res) => {
 // Delete menu item (admin only)
 router.delete('/items/:id', authMiddleware, async (req, res) => {
     try {
-        await MenuItem.findByIdAndDelete(req.params.id);
+        const { error } = await supabaseAdmin // Use admin client
+            .from('menu_items')
+            .delete()
+            .eq('id', req.params.id);
+
+        if (error) throw error;
         res.json({ message: 'Menu item deleted successfully' });
     } catch (error) {
+        console.error('Error deleting menu item:', error);
         res.status(500).json({ error: 'Error deleting menu item' });
     }
 });
@@ -100,13 +171,22 @@ router.delete('/items/:id', authMiddleware, async (req, res) => {
 // Get settings (public)
 router.get('/settings', async (req, res) => {
     try {
-        let settings = await Settings.findOne();
-        if (!settings) {
-            settings = new Settings();
-            await settings.save();
+        const { data, error } = await supabase
+            .from('settings')
+            .select('*')
+            .eq('key', 'showPrices')
+            .single();
+
+        if (error && error.code !== 'PGRST116') throw error;
+
+        // Return default if not found
+        if (!data) {
+            return res.json({ showPrices: true });
         }
-        res.json(settings);
+
+        res.json({ showPrices: data.value.enabled });
     } catch (error) {
+        console.error('Error fetching settings:', error);
         res.status(500).json({ error: 'Error fetching settings' });
     }
 });
@@ -115,15 +195,21 @@ router.get('/settings', async (req, res) => {
 router.put('/settings', authMiddleware, async (req, res) => {
     try {
         const { showPrices } = req.body;
-        let settings = await Settings.findOne();
-        if (!settings) {
-            settings = new Settings();
-        }
-        settings.showPrices = showPrices;
-        settings.updatedAt = Date.now();
-        await settings.save();
-        res.json(settings);
+
+        const { data, error } = await supabaseAdmin // Use admin client
+            .from('settings')
+            .upsert({
+                key: 'showPrices',
+                value: { enabled: showPrices },
+                updated_at: new Date().toISOString()
+            })
+            .select()
+            .single();
+
+        if (error) throw error;
+        res.json({ showPrices: data.value.enabled });
     } catch (error) {
+        console.error('Error updating settings:', error);
         res.status(500).json({ error: 'Error updating settings' });
     }
 });

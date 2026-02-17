@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - Node.js installed
-- MongoDB Atlas account (or local MongoDB)
+- Supabase account (free tier available at https://supabase.com)
 
 ## Installation
 
@@ -11,10 +11,17 @@
 npm install
 ```
 
-2. Configure MongoDB:
-- Copy `.env.example` to `.env`
-- Update the `MONGODB_URI` in `.env` file with your MongoDB Atlas connection string
-- See `.env.example` for required environment variables
+2. Set up Supabase:
+   - Create a new project at https://supabase.com
+   - Go to Project Settings > API
+   - Copy your project URL and anon/public key
+   - Run the SQL schema from `backend/config/schema.sql` in the Supabase SQL Editor
+   - Create a storage bucket named `gallery-images` and make it public
+
+3. Configure environment variables:
+   - Copy `.env.example` to `.env`
+   - Update `SUPABASE_URL` and `SUPABASE_ANON_KEY` in `.env` file
+   - See `.env.example` for all required environment variables
 
 3. Start the server:
 ```bash
@@ -37,15 +44,17 @@ npm start
 
 ## Important Notes
 
-- The `.env` file contains your MongoDB connection string - keep it secure
+- The `.env` file contains your Supabase credentials - keep it secure
 - Update WhatsApp number and Instagram handle in the code before deployment
-- Gallery images are stored in `frontend/assets/uploads/`
+- Gallery images are stored in Supabase Storage
 - Admin credentials can be changed in `.env` file
 
 ## Deployment
 
 For production deployment:
-1. Set up MongoDB Atlas cluster
-2. Update `.env` with production MongoDB URI
-3. Deploy to hosting service (Heroku, Railway, Render, etc.)
-4. Ensure environment variables are set on hosting platform
+1. Set up Supabase project (if not already done)
+2. Run the SQL schema in Supabase SQL Editor
+3. Create the `gallery-images` storage bucket
+4. Update `.env` with production Supabase credentials
+5. Deploy to hosting service (Vercel, Netlify, Railway, Render, etc.)
+6. Ensure environment variables are set on hosting platform

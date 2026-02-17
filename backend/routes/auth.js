@@ -1,27 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-// Login route
+// Simple login route without Supabase Auth
 router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
 
         // Check credentials against environment variables
-        if (username !== process.env.ADMIN_USERNAME) {
-            return res.status(401).json({ error: 'Invalid credentials' });
-        }
-
-        // Compare password
-        if (password !== process.env.ADMIN_PASSWORD) {
+        if (username !== process.env.ADMIN_USERNAME || password !== process.env.ADMIN_PASSWORD) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
         // Create JWT token
         const token = jwt.sign(
-            { username: username },
+            { username: username, role: 'admin' },
             process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
@@ -31,6 +25,7 @@ router.post('/login', async (req, res) => {
             message: 'Login successful'
         });
     } catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({ error: 'Server error during login' });
     }
 });
