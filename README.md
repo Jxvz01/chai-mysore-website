@@ -12,8 +12,9 @@ npm install
 ```
 
 2. Configure MongoDB:
+- Copy `.env.example` to `.env`
 - Update the `MONGODB_URI` in `.env` file with your MongoDB Atlas connection string
-- Format: `mongodb+srv://username:password@cluster.mongodb.net/chai-mysore`
+- See `.env.example` for required environment variables
 
 3. Start the server:
 ```bash
