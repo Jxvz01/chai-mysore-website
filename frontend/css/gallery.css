@@ -1,0 +1,190 @@
+/* ========================================
+   GALLERY - CHAI MYSORE
+   Warm Café Aesthetic - Full Width Soft Rounded
+   ======================================== */
+
+/* === Gallery Section - EDGE TO EDGE === */
+.gallery-section {
+    padding: clamp(16rem, 26vh, 20rem) 0;
+    background: #F5EFE6;
+}
+
+.gallery-section .section-title {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 300;
+    margin-bottom: clamp(8rem, 14vh, 12rem);
+    letter-spacing: -0.04em;
+    text-align: center;
+    padding: 0 var(--spacing-md);
+    color: #1a1a1a;
+}
+
+/* === Gallery Grid - FULL WIDTH EDGE-TO-EDGE === */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 0;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.gallery-item {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 0;
+    cursor: pointer;
+    background: #e8e6e3;
+    box-shadow: none;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.06);
+    opacity: 0.9;
+}
+
+/* === Lightbox === */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(35, 45, 95, 0.96);
+    backdrop-filter: blur(20px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 2rem;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.lightbox-image,
+#lightboxImage {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.lightbox-close {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    background: transparent;
+    border: 2px solid #d4af37;
+    border-radius: 50%;
+    color: #d4af37;
+    font-size: 1.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.7s ease;
+    z-index: 2001;
+}
+
+.lightbox-close:hover {
+    background: #d4af37;
+    color: #232d5f;
+    transform: rotate(90deg);
+}
+
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    background: rgba(212, 175, 55, 0.1);
+    border: 2px solid #d4af37;
+    border-radius: 50%;
+    color: #d4af37;
+    font-size: 2.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2001;
+    backdrop-filter: blur(10px);
+}
+
+.lightbox-prev {
+    left: 2rem;
+}
+
+.lightbox-next {
+    right: 2rem;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    background: #d4af37;
+    color: #232d5f;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* === Empty State === */
+.gallery-empty {
+    text-align: center;
+    padding: 8rem 2rem;
+    color: #6b6b6b;
+    font-size: 1.125rem;
+    font-weight: 300;
+}
+
+/* === Responsive Design === */
+@media (max-width: 1024px) {
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-section {
+        padding: clamp(12rem, 22vh, 16rem) 0;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        padding: 0 1.25rem;
+    }
+
+    .gallery-item {
+        border-radius: 10px;
+    }
+
+    .lightbox {
+        padding: 1rem;
+    }
+
+    .lightbox-close {
+        top: -3.5rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+    }
+}

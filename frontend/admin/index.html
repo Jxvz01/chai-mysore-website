@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - CHAI MYSORE</title>
+    <link rel="stylesheet" href="/admin/css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>CHAI MYSORE</h1>
+                <p>Admin Panel</p>
+            </div>
+
+            <div id="loginError" class="error-message"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard">
+        <!-- Header -->
+        <header class="admin-header">
+            <h1>CHAI MYSORE Admin</h1>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </header>
+
+        <!-- Content -->
+        <div class="admin-content">
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="menu">Menu Management</button>
+                <button class="tab-btn" data-tab="gallery">Gallery Management</button>
+            </div>
+
+            <!-- Menu Management Tab -->
+            <div id="menuTab" class="tab-content active">
+
+                <!-- Settings -->
+                <div class="admin-card">
+                    <h2>Menu Settings</h2>
+                    <div class="checkbox-group">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showPricesToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <label for="showPricesToggle" style="cursor: pointer;">Show Prices on Website</label>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="admin-card">
+                    <h2>Categories</h2>
+
+                    <form id="categoryForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="categoryName">Category Name</label>
+                                <input type="text" id="categoryName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="categoryOrder">Display Order</label>
+                                <input type="number" id="categoryOrder" value="0">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Category</button>
+                    </form>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Order</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoriesTable"></tbody>
+                    </table>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="admin-card">
+                    <h2>Menu Items</h2>
+
+                    <form id="menuItemForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="itemName">Item Name</label>
+                                <input type="text" id="itemName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="itemCategory">Category</label>
+                                <select id="itemCategory" required></select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="itemPrice">Price (₹)</label>
+                                <input type="number" id="itemPrice" step="0.01" min="0">
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox-group" style="margin-top: 2rem;">
+                                    <input type="checkbox" id="itemSpecial">
+                                    <label for="itemSpecial">Mark as Today's Special</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="itemDescription">Description (Optional)</label>
+                            <textarea id="itemDescription"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="itemImage">Image URL (Optional)</label>
+                            <input type="text" id="itemImage" placeholder="Enter image URL">
+                            <p style="font-size: 0.875rem; color: #666; margin-top: 0.5rem;">
+                                Note: Images will only be displayed for items marked as "Today's Special"
+                            </p>
+                        </div>
+
+                        <input type="hidden" id="editItemId">
+                        <button type="submit" class="btn btn-primary">
+                            <span id="menuItemBtnText">Add Menu Item</span>
+                        </button>
+                        <button type="button" id="cancelEditBtn" class="btn"
+                            style="display: none; background: #999; color: white;">Cancel</button>
+                    </form>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Special</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="menuItemsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Gallery Management Tab -->
+            <div id="galleryTab" class="tab-content">
+                <div class="admin-card">
+                    <h2>Upload Images</h2>
+
+                    <form id="galleryUploadForm">
+                        <div class="upload-area" id="uploadArea">
+                            <input type="file" id="galleryImageInput" accept="image/*" multiple>
+                            <p>Click to upload images</p>
+                            <p style="font-size: 0.875rem; color: #666; margin-top: 0.5rem;">
+                                Supported: JPG, PNG, GIF, WebP (Max 5MB each)
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="admin-card">
+                    <h2>Gallery Images</h2>
+                    <div id="galleryAdminGrid" class="gallery-admin-grid"></div>
+                    <div id="galleryAdminEmpty" style="text-align: center; padding: 2rem; color: #999;">
+                        No images uploaded yet.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/admin/js/admin.js"></script>
+</body>
+
+</html>

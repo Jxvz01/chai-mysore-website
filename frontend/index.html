@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="CHAI MYSORE - Everyday chai. Everyday conversations. Your premium café in Bannimantap, Mysuru, Karnataka.">
+  <meta name="keywords" content="chai, mysore, cafe, beverages, mysuru, bannimantap">
+  <title>CHAI MYSORE - Everyday chai. Everyday conversations.</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/menu.css">
+  <link rel="stylesheet" href="/css/gallery.css">
+  <link rel="stylesheet" href="/css/about.css">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#home" class="navbar-logo">
+        <img src="/assets/images/logo.png" alt="CHAI MYSORE" style="height: 50px; width: auto;">
+      </a>
+      <button class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar-menu" id="navbarMenu">
+        <li><a href="#menu" class="navbar-link">Menu</a></li>
+        <li><a href="#gallery" class="navbar-link">Gallery</a></li>
+        <li><a href="#location" class="navbar-link">Location</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <p class="hero-brand">CHAI MYSORE</p>
+      <h1 class="hero-headline">Everyday chai.<br>Everyday conversations.</h1>
+      <div class="hero-cta">
+        <a href="#location" class="btn btn-primary">Get Directions</a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Today's Special Section -->
+  <section id="todays-special" class="special-section">
+    <div class="container">
+      <div class="special-header">
+        <h2 class="section-title">Today's Special</h2>
+      </div>
+      <div id="specialItems" class="special-items"></div>
+    </div>
+  </section>
+
+
+
+  <!-- Menu Section -->
+  <section id="menu" class="menu-section">
+    <div class="container">
+      <h2 class="section-title">Menu</h2>
+
+      <div id="menuCategories" class="menu-categories"></div>
+
+      <!-- Loading State -->
+      <div id="menuLoading" class="menu-empty">
+        <p>Loading menu...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="gallery-section">
+    <div class="container-wide">
+      <h2 class="section-title">Gallery</h2>
+
+      <div id="galleryGrid" class="gallery-grid"></div>
+
+      <!-- Loading State -->
+      <div id="galleryLoading" class="gallery-empty">
+        <p>Loading gallery...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <button class="lightbox-close" id="lightboxClose">×</button>
+    <button class="lightbox-prev" id="lightboxPrev">‹</button>
+    <button class="lightbox-next" id="lightboxNext">›</button>
+    <img id="lightboxImage" src="" alt="">
+  </div>
+
+
+  <!-- Location Section -->
+  <section id="location" class="location-section">
+    <div class="container">
+      <h2 class="section-title">Location & Timings</h2>
+
+      <div class="location-content">
+        <div class="location-info">
+          <div class="info-item">
+            <div class="info-text">
+              <strong>Address</strong>
+              722, 15, S S Nagar, B Layout, Bank Colony,<br>
+              Bannimantap, Mysuru, Karnataka 570015
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-text">
+              <strong>Operating Hours</strong>
+              8 AM - 10 PM<br>
+              Open 7 days a week
+            </div>
+          </div>
+
+          <a href="https://maps.app.goo.gl/5uxz2aAnkTSrCWtf7" target="_blank" class="btn btn-primary mt-2">
+            Get Directions
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <img src="/assets/images/logo.png" alt="CHAI MYSORE" class="footer-logo">
+        <p class="footer-tagline">Everyday chai. Everyday conversations.</p>
+
+        <div class="footer-info">
+          <p>722, 15, S S Nagar, B Layout, Bank Colony, Bannimantap, Mysuru, Karnataka 570015</p>
+          <p>8 AM - 10 PM · Open 7 days a week</p>
+          <p><a href="https://instagram.com/chaimysore" target="_blank">@chaimysore</a></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 CHAI MYSORE. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="/js/main.js"></script>
+  <script src="/js/animations.js"></script>
+</body>
+
+</html>

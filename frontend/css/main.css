@@ -1,0 +1,563 @@
+/* ========================================
+   CHAI MYSORE - Design System
+   Brand Colors: Royal Blue + Warm Gold + Cream
+   ======================================== */
+
+/* === CSS Custom Properties === */
+:root {
+  /* Warm Café Colors */
+  --royal-blue: #232d5f;
+  --royal-blue-dark: #1a2347;
+  --royal-blue-light: #3a4a7f;
+  --warm-gold: #c9a961;
+  --warm-gold-dark: #b8944d;
+  --warm-gold-bright: #d4af37;
+  --cream: #F5EFE6;
+  --cream-dark: #f0e8dc;
+
+  /* Soft Neutral Colors */
+  --white: #F5EFE6;
+  --black: #111111;
+  --text-dark: #1a1a1a;
+  --text-light: #4a4a4a;
+
+  /* Typography */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 6rem;
+
+  /* Transitions - Slower and more graceful */
+  --transition-fast: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows - Minimal only */
+  --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+}
+
+/* === Google Fonts Import === */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* === Reset & Base Styles === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-dark);
+  background-color: var(--cream);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* === Typography === */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--text-dark);
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-size: clamp(3rem, 6vw, 5rem);
+  margin-bottom: var(--spacing-md);
+}
+
+h2 {
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  margin-bottom: var(--spacing-md);
+}
+
+h3 {
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  margin-bottom: var(--spacing-sm);
+}
+
+p {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.75;
+  color: var(--text-light);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 300;
+}
+
+/* === Buttons === */
+.btn {
+  display: inline-block;
+  padding: 1.125rem 2.75rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: var(--warm-gold);
+  color: var(--royal-blue);
+}
+
+.btn-primary:hover {
+  background: var(--warm-gold-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 169, 97, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--warm-gold);
+  border: 2px solid var(--warm-gold);
+}
+
+.btn-outline:hover {
+  background: var(--warm-gold);
+  color: var(--royal-blue);
+  transform: translateY(-3px);
+}
+
+/* === Container === */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.container-wide {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* === Section Spacing === */
+section {
+  padding: clamp(6rem, 12vh, 10rem) 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vh, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--warm-gold);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 1.25rem;
+}
+
+/* === Cards === */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* === Badge === */
+.badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--warm-gold);
+  color: var(--royal-blue);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: var(--radius-sm);
+}
+
+.badge-special {
+  background: var(--warm-gold);
+}
+
+/* === Grid System === */
+.grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* === Animations - Very Subtle === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.slide-up {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.slide-up:not(.visible) {
+  opacity: 0.5;
+  transform: translateY(10px);
+}
+
+.slide-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Animation */
+.stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.stagger-item:not(.visible) {
+  opacity: 0.6;
+}
+
+.stagger-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-item:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.stagger-item:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.stagger-item:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.stagger-item:nth-child(4) {
+  transition-delay: 0.4s;
+}
+
+.stagger-item:nth-child(5) {
+  transition-delay: 0.5s;
+}
+
+.stagger-item:nth-child(6) {
+  transition-delay: 0.6s;
+}
+
+/* === Navbar === */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  padding: 1.5rem 0;
+  z-index: 1000;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar.scrolled {
+  background: var(--royal-blue);
+  padding: 1rem 0;
+  box-shadow: var(--shadow-subtle);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--warm-gold);
+  text-decoration: none;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: var(--spacing-md);
+}
+
+.navbar-link {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.navbar-link:hover {
+  color: var(--warm-gold);
+}
+
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--warm-gold);
+  transition: width var(--transition-normal);
+}
+
+.navbar-link:hover::after {
+  width: 100%;
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: var(--warm-gold);
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+}
+
+/* === Footer === */
+.footer {
+  background: var(--royal-blue);
+  color: var(--white);
+  padding: var(--spacing-lg) 0 var(--spacing-md);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.footer-section h3 {
+  color: var(--warm-gold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.footer-section p,
+.footer-section a {
+  color: var(--cream);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-section a:hover {
+  color: var(--warm-gold);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  color: var(--cream);
+}
+
+/* === Floating WhatsApp Button === */
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+.whatsapp-float svg {
+  width: 35px;
+  height: 35px;
+  fill: var(--white);
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  :root {
+    --spacing-lg: 3rem;
+    --spacing-xl: 4rem;
+  }
+
+  .navbar-menu {
+    position: fixed;
+    top: 70px;
+    left: -100%;
+    width: 100%;
+    background: var(--royal-blue);
+    flex-direction: column;
+    padding: var(--spacing-md);
+    transition: left var(--transition-normal);
+  }
+
+  .navbar-menu.active {
+    left: 0;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .whatsapp-float {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .whatsapp-float svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* === Utility Classes === */
+.text-center {
+  text-align: center;
+}
+
+.text-gold {
+  color: var(--warm-gold);
+}
+
+.text-blue {
+  color: var(--royal-blue);
+}
+
+.bg-blue {
+  background-color: var(--royal-blue);
+}
+
+.bg-cream {
+  background-color: var(--cream);
+}
+
+.bg-white {
+  background-color: var(--white);
+}
+
+.mt-1 {
+  margin-top: var(--spacing-sm);
+}
+
+.mt-2 {
+  margin-top: var(--spacing-md);
+}
+
+.mt-3 {
+  margin-top: var(--spacing-lg);
+}
+
+.mb-1 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.mb-2 {
+  margin-bottom: var(--spacing-md);
+}
+
+.mb-3 {
+  margin-bottom: var(--spacing-lg);
+}
+
+.hidden {
+  display: none;
+}
